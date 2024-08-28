@@ -46,6 +46,20 @@ app.put('/api/alunos/:id', (req, res) => {
     }
 })
 
+app.delete('/api/alunos/:id', (req,res) => {
+    const id = parseInt (req.params.id)
+    const alunoIndex = alunos.findIndex (aluno => aluno.id === Number(id))
+    console.log('aluno index:', alunoIndex)
+    console.log('ID:', id)
+    
+    if (alunoIndex === -1) {
+        return res.status(404).json({message: 'Aluno não encontrado'})
+    } else {
+        alunos.splice(alunoIndex, 1)
+        res.json({message: 'Aluno removido com sucesso'})
+    }
+})
+
 app.listen(PORT,() =>{
     console.log(`servidor rodando na porta ${PORT}`)
 })
