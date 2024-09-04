@@ -1,10 +1,12 @@
 const express = require('express')
 const req = require('express/lib/request')
 const res = require('express/lib/response')
+const swaggerUI = require("swagger-ui-express")
 const app = express()
 const PORT = 3000
 
 app.use(express.json())
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(require('./swagger.json')) )
 
 let alunos = [
     {id: 1, nome: 'Gabriel'},
@@ -47,16 +49,16 @@ app.put('/api/alunos/:id', (req, res) => {
 })
 
 app.delete('/api/alunos/:id', (req,res) => {
-    const id = parseInt (req.params.id)
+    const {id} = req.params
     const alunoIndex = alunos.findIndex (aluno => aluno.id === Number(id))
     console.log('aluno index:', alunoIndex)
     console.log('ID:', id)
     
     if (alunoIndex === -1) {
-        return res.status(404).json({message: 'Aluno não encontrado'})
+        res.status(404).json({message: 'Aluno não encontrado'})
     } else {
         alunos.splice(alunoIndex, 1)
-        res.json({message: 'Aluno removido com sucesso'})
+        res.status(204).send()
     }
 })
 
