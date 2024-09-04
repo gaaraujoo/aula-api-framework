@@ -1,0 +1,105 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Alunos",
+        "description": "Documentação sobre APIs de cadastro de alunos",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/alunos": {
+            "get": {
+                "tags": ["Alunos"],
+                "summary": "Obter todos os Alunos",
+                "responses": {
+                    "200": {
+                        "description": "Lista de Alunos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Alunos"],
+                "summary": "Adicionar um novo aluno",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["nome"]
+                            }
+                        }
+                    } 
+                },
+                "responses": {
+                    "201": {
+                        "description": "Aluno criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "number"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/alunos/{id}": {
+            "delete": {
+                "tags": ["Alunos"],
+                "summary": "Deletar um aluno",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "description": "ID do Aluno"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Aluno removido com sucesso"
+                    },
+                    "404": {
+                        "description": "Aluno não encontrado"
+                    }
+                }
+            }
+        }
+    }
+}
